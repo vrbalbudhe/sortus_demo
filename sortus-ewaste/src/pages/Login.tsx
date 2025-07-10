@@ -20,7 +20,7 @@ interface AuthContextType {
 
 const LeftPanel = () => {
   return (
-    <div className="w-1/2 flex items-start justify-center p-6 bg-transparent">
+    <div className="hidden w-1/2 md:flex items-start justify-center p-6 bg-transparent">
       <div
         className="w-[692px] h-screen bg-gradient-to-br from-emerald-400 via-teal-500 to-emerald-600 flex items-center justify-center shadow-2xl duration-700"
         style={{
@@ -73,7 +73,7 @@ const RightPanel = () => {
   };
 
   return (
-    <div className="w-1/2 flex items-center justify-center px-6 py-10">
+    <div className="w-full md:w-1/2 flex items-center justify-center px-6 py-10">
       <div className="w-full max-w-md">
         <div className="flex flex-col items-center mb-8">
           <div className="w-24 h-24 bg-transparent flex items-center justify-center mb-4">

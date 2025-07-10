@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate, Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../hooks/AuthContext";
 import axios from "axios";
+import { Menu } from "lucide-react";
 
 interface User {
   userId?: string;
@@ -142,7 +143,7 @@ const UnsignedLoginButton = () => {
     <div className="flex items-center space-x-3 select-none">
       <Link
         to="/signup"
-        className="text-emerald-600 hover:text-emerald-700 font-medium transition-colors duration-300 px-4 py-2 rounded-full bg-emerald-50"
+        className="text-emerald-600 hidden md:block hover:text-emerald-700 font-medium transition-colors duration-300 px-4 py-2 rounded-full bg-emerald-50"
       >
         Register
       </Link>
@@ -152,6 +153,60 @@ const UnsignedLoginButton = () => {
       >
         Login
       </Link>
+      {/* Mobile menu button */}
+      <div className="md:hidden">
+        <span className="text-white">
+          <div className="relative group">
+            <button className="focus:outline-none">
+              <Menu />
+            </button>
+            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 z-50">
+              <NavLink
+                to="/"
+                className="block px-4 py-2 text-gray-700 hover:bg-emerald-100"
+              >
+                Home
+              </NavLink>
+              <NavLink
+                to="/how-it-works"
+                className="block px-4 py-2 text-gray-700 hover:bg-emerald-100"
+              >
+                How It Works
+              </NavLink>
+              <NavLink
+                to="/price-list"
+                className="block px-4 py-2 text-gray-700 hover:bg-emerald-100"
+              >
+                Price List
+              </NavLink>
+              <NavLink
+                to="/pickup"
+                className="block px-4 py-2 text-gray-700 hover:bg-emerald-100"
+              >
+                Pickup
+              </NavLink>
+              <NavLink
+                to="/eco-store"
+                className="block px-4 py-2 text-gray-700 hover:bg-emerald-100"
+              >
+                Eco-Store
+              </NavLink>
+              <NavLink
+                to="/login"
+                className="block px-4 py-2 text-emerald-600 hover:bg-emerald-100"
+              >
+                Login
+              </NavLink>
+              <NavLink
+                to="/signup"
+                className="block px-4 py-2 text-emerald-600 hover:bg-emerald-100"
+              >
+                Register
+              </NavLink>
+            </div>
+          </div>
+        </span>
+      </div>
     </div>
   );
 };

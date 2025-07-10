@@ -143,7 +143,7 @@ const Signup = () => {
       />
 
       <div className="flex relative z-10">
-        <div className="w-1/2 flex items-start justify-center relative p-6">
+        <div className="hidden md:w-1/2 md:flex items-start justify-center relative p-6">
           <div
             className="w-[692px] min-h-screen bg-[#C8C8C8] flex items-center justify-center shadow-lg"
             style={{
@@ -159,14 +159,14 @@ const Signup = () => {
           </div>
         </div>
 
-        <div className="w-1/2 flex items-center justify-center px-6 py-10">
+        <div className="md:w-1/2 w-full flex items-center justify-center px-6 py-10">
           <div className="w-full max-w-md">
             <div className="flex flex-col items-center mb-6">
-              <img
-                src="./images/SortUsLogo.png"
-                alt="SortUs Logo"
-                className="h-24 mb-4"
-              />
+             <img
+              src="./SortUsLogo-removebg-preview.png"
+              alt="SortUs Logo"
+              className="h-16 w-16 object-contain"
+            />
               <h1 className="text-[32px] font-bold text-black">Hi Recycler</h1>
               <p className="text-lg text-gray-600 font-medium">
                 Welcome to SortUs
