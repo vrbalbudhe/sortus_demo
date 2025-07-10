@@ -144,12 +144,7 @@ export const login = async (req, res, next) => {
       expiresIn: '2d',
     });
 
-    await res.cookie('token', token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      maxAge: 2 * 24 * 60 * 60 * 1000,
-    });
+    await res.append('Set-Cookie', `token=${token}; HttpOnly; Secure; SameSite=None; Max-Age=${2 * 24 * 60 * 60}; Partitioned`);
 
     const userResponse = { ...user.toObject() };
     delete userResponse.password;
