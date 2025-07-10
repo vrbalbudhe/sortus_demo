@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: `http://localhost:${process.env.CLIENT_ORIGIN || 3000}`,
+  origin: `${process.env.CLIENT_ORIGIN || "https://sortus-demo-a96w-vrbalbudhes-projects.vercel.app/"}`,
   credentials: true
 }));
 
