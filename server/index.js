@@ -20,7 +20,10 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
   origin: `${process.env.CLIENT_ORIGIN || "https://sortus-demo-a96w-vrbalbudhes-projects.vercel.app/"}`,
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+  exposedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use('/api/auth', authRoutes);
