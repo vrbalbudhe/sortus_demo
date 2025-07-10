@@ -1569,3 +1569,6 @@
 2025-07-10 11:21:16 info: Firebase Admin SDK initialized successfully
 2025-07-10 11:21:17 info: MongoDB connected: ac-fgzrrji-shard-00-00.yxglg0q.mongodb.net
 2025-07-10 11:21:17 info: Server running on port 8000
+2025-07-10 11:33:04 info: Firebase Admin SDK initialized successfully
+2025-07-10 11:33:05 info: MongoDB connected: ac-fgzrrji-shard-00-01.yxglg0q.mongodb.net
+2025-07-10 11:33:05 info: Server running on port 8000
