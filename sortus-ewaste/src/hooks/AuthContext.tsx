@@ -42,7 +42,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   const fetchUser = async (): Promise<void> => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/auth/checkAuth`,
+        `${process.env.REACT_APP_API_URL}/api/auth/checkAuth`,
         {
           withCredentials: true,
         }
@@ -50,7 +50,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
       const userInfo = response?.data?.payload;
       if (userInfo?.email) {
         const response1 = await axios.get(
-          `http://localhost:8000/api/users/get/email/${userInfo?.email}`,
+          `${process.env.REACT_APP_API_URL}/api/users/get/email/${userInfo?.email}`,
           {
             withCredentials: true,
           }

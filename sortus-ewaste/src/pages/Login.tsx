@@ -52,7 +52,7 @@ const RightPanel = () => {
       setErrors({});
       setLoading(true);
       const response = await axios.post(
-        `http://localhost:8000/api/auth/login`,
+        `${process.env.REACT_APP_API_URL}/api/auth/login`,
         { email, password },
         { withCredentials: true }
       );
