@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import helmet from 'helmet'
 dotenv.config();
 
 import { initializeFirebaseAdmin } from './config/firebase.js';
@@ -15,16 +16,23 @@ import cookieParser from 'cookie-parser';
 const app = express();
 const PORT = process.env.PORT || 8000;
 
-app.use(express.json());
-app.use(cookieParser());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors({
-  origin: `${process.env.CLIENT_ORIGIN || "https://sortus-demo-a96w-vrbalbudhes-projects.vercel.app/"}`,
+const corsOptions = {
+  origin: process.env.CLIENT_ORIGIN || "https://sortus-demo-a96w.vercel.app/",
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-  exposedHeaders: ['Content-Type', 'Authorization']
-}));
+  exposedHeaders: ['Content-Type', 'Authorization'],
+  preflightContinue: true
+};
+
+app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+app.options('*', cors(corsOptions));
+app.use(cors(corsOptions));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", `${process.env.CLIENT_ORIGIN}`);
