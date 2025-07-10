@@ -45,6 +45,8 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
         `${process.env.REACT_APP_API_URL}/api/auth/checkAuth`,
         {
           withCredentials: true,
+          validateStatus: (status) =>
+            (status >= 200 && status < 300) || status === 401,
         }
       );
       const userInfo = response?.data?.payload;
