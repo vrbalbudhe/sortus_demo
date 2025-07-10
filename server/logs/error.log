@@ -1,0 +1,31 @@
+2025-06-06 11:04:29 error: Authentication failed
+2025-06-06 11:04:30 error: Authentication failed
+2025-06-06 11:04:32 error: Authentication failed
+2025-06-06 11:04:33 error: Authentication failed
+2025-06-16 16:16:27 error: User validation failed: firebaseUid: Path `firebaseUid` is required., username: Path `username` is required., email: Path `email` is required.
+2025-06-16 16:19:39 error: User validation failed: firebaseUid: Path `firebaseUid` is required., username: Path `username` is required., email: Path `email` is required.
+2025-06-16 16:21:57 error: User validation failed: firebaseUid: Path `firebaseUid` is required., username: Path `username` is required., email: Path `email` is required.
+2025-06-16 16:23:19 error: User validation failed: firebaseUid: Path `firebaseUid` is required., username: Path `username` is required., email: Path `email` is required.
+2025-06-16 16:27:51 error: User validation failed: firebaseUid: Path `firebaseUid` is required., username: Path `username` is required., email: Path `email` is required.
+2025-06-16 16:31:42 error: User validation failed: firebaseUid: Path `firebaseUid` is required., username: Path `username` is required., email: Path `email` is required.
+2025-06-16 16:38:18 error: All fields are required
+2025-06-16 16:40:14 error: All fields are required
+2025-06-16 16:45:45 error: All fields are required
+2025-06-16 17:02:46 error: Expected ',' or '}' after property value in JSON at position 70 (line 4 column 3)
+2025-06-16 17:03:18 error: Expected ',' or '}' after property value in JSON at position 70 (line 4 column 3)
+2025-06-16 19:54:29 error: Invalid email or password
+2025-07-07 14:50:06 error: Error connecting to MongoDB: querySrv EREFUSED _mongodb._tcp.cluster0.yxglg0q.mongodb.net
+2025-07-07 14:52:42 error: Error connecting to MongoDB: queryTxt ETIMEOUT cluster0.yxglg0q.mongodb.net
+2025-07-07 15:14:57 error: Error connecting to MongoDB: queryTxt ETIMEOUT cluster0.yxglg0q.mongodb.net
+2025-07-07 15:24:25 error: Error connecting to MongoDB: queryTxt ETIMEOUT cluster0.yxglg0q.mongodb.net
+2025-07-07 16:05:25 error: Email and password are required
+2025-07-07 16:05:32 error: Email and password are required
+2025-07-07 20:51:22 error: Error connecting to MongoDB: queryTxt ETIMEOUT cluster0.yxglg0q.mongodb.net
+2025-07-08 00:10:15 error: Unexpected token 'h', "https:" is not valid JSON
+2025-07-08 00:23:27 error: Unexpected token 'h', "https:" is not valid JSON
+2025-07-08 14:06:18 error: Expected double-quoted property name in JSON at position 1465 (line 45 column 1)
+2025-07-08 15:03:03 error: Error connecting to MongoDB: queryTxt ETIMEOUT cluster0.yxglg0q.mongodb.net
+2025-07-08 15:15:18 error: Error connecting to MongoDB: queryTxt ETIMEOUT cluster0.yxglg0q.mongodb.net
+2025-07-08 15:21:23 error: Error connecting to MongoDB: queryTxt ETIMEOUT cluster0.yxglg0q.mongodb.net
+2025-07-08 16:06:35 error: Error connecting to MongoDB: queryTxt ETIMEOUT cluster0.yxglg0q.mongodb.net
+2025-07-08 16:09:22 error: Error connecting to MongoDB: queryTxt ETIMEOUT cluster0.yxglg0q.mongodb.net

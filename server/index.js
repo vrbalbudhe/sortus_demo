@@ -1,0 +1,39 @@
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+dotenv.config();
+
+import { initializeFirebaseAdmin } from './config/firebase.js';
+import { connectToDatabase } from './config/database.js';
+import { errorHandler } from './middlewares/errorHandler.js';
+import { logger } from './utils/logger.js';
+import authRoutes from './routes/auth.routes.js';
+import userRoutes from './routes/user.routes.js';
+import productRoutes from './routes/product.routes.js';
+import cookieParser from 'cookie-parser';
+
+const app = express();
+const PORT = process.env.PORT || 8000;
+
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors({
+  origin: `http://localhost:${process.env.CLIENT_ORIGIN || 3000}`,
+  credentials: true
+}));
+
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/product', productRoutes);
+app.use(errorHandler);
+
+const StartConnection = async () => {
+  app.listen(PORT, async () => {
+    initializeFirebaseAdmin();
+    await connectToDatabase();
+    logger.info(`Server running on port ${PORT}`);
+  });
+}
+
+StartConnection();
