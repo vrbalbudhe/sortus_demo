@@ -1,9 +1,7 @@
 import React, { createContext, useEffect, useState, ReactNode } from "react";
 import axios from "axios";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
-const Spinner = AiOutlineLoading3Quarters as React.FC<
-  React.ComponentProps<"svg">
->;
+import * as FaIcons from "react-icons/ai";
+import { wrapIcon } from "../utlis/IconWrapper";
 
 interface User {
   userId?: string;
@@ -31,9 +29,10 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   children,
 }) => {
+  const AiOutlineLoading3Quarters = wrapIcon(FaIcons.AiOutlineLoading3Quarters);
+
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [id, setId] = useState<string>();
 
   const refreshLoginContext = async (): Promise<void> => {
     await fetchUser();
@@ -45,8 +44,6 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
         `${process.env.REACT_APP_API_URL}/api/auth/checkAuth`,
         {
           withCredentials: true,
-          validateStatus: (status) =>
-            (status >= 200 && status < 300) || status === 401,
         }
       );
       const userInfo = response?.data?.payload;
@@ -76,7 +73,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   if (loading) {
     return (
       <div className="w-screen h-screen flex justify-center items-center backdrop-blur-md">
-        <Spinner className="animate-spin text-blue-600 text-5xl" />
+        <AiOutlineLoading3Quarters className="animate-spin text-blue-600 text-5xl" />
       </div>
     );
   }

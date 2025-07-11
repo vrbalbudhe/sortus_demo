@@ -19,7 +19,7 @@ interface User {
   [key: string]: any;
 }
 
-const Signup = () => {
+const Signup: React.FC = () => {
   const [step, setStep] = useState(1);
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [formData, setFormData] = useState({
@@ -38,12 +38,14 @@ const Signup = () => {
     government_registration_no: "",
     operation_range_km: "",
     vehicle_details: "",
-    id_proof: null,
+    id_proof: null as File | null,
   });
 
-  const { user, setUser, loading, setLoading, refreshLoginContext } =
-    useContext(AuthContext) as AuthContextType;
+  const { setUser, setLoading, refreshLoginContext } = useContext(
+    AuthContext
+  ) as AuthContextType;
   const [errors, setErrors] = useState<{ general?: string }>({});
+  const navigate = useNavigate();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -57,10 +59,12 @@ const Signup = () => {
 
   const validateEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
   const validatePassword = (password: string) =>
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,}$/.test(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?#&])[A-Za-z\d@$!%?#&]{8,}$/.test(
       password
     );
+
   const validateContactNo = (contact: string) => /^\d{10}$/.test(contact);
 
   const handleContinue = () => {
@@ -96,17 +100,14 @@ const Signup = () => {
     setStep(2);
   };
 
-  const updateFormData = (data: any) => {
+  const updateFormData = (data: Partial<typeof formData>) => {
     setFormData((prev) => ({
       ...prev,
       ...data,
     }));
   };
 
-  const navigate = useNavigate();
-
   const submitForm = async () => {
-    console.log(formData);
     try {
       setLoading(true);
       const firebaseUid = formData.fullName + formData.username;
@@ -115,60 +116,59 @@ const Signup = () => {
         { ...formData, firebaseUid },
         { withCredentials: true }
       );
+
       if (response?.data?.data?.user) {
         navigate("/");
         await refreshLoginContext();
         setUser(response?.data?.data?.user);
-      }
-      if (!response?.data?.data?.user) {
+      } else {
         setErrors({
-          general: response?.data?.data?.message || "Login failed",
+          general: response?.data?.data?.message || "Signup failed",
         });
       }
     } catch (error) {
+      console.error("Signup Error:", error);
+      setErrors({
+        general: "Signup failed. Please try again.",
+      });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="w-full relative min-h-screen font-sans overflow-hidden">
-      <div
-        className="absolute bottom-0 left-0 w-full h-[95px] z-0 bg-repeat-x"
-        style={{
-          backgroundImage: "url('./images/tree.png')",
-          backgroundPosition: "bottom",
-          backgroundSize: "auto 100%",
-        }}
-      />
-
-      <div className="flex relative z-10">
-        <div className="hidden md:w-1/2 md:flex items-start justify-center relative p-6">
-          <div
-            className="w-[692px] min-h-screen bg-[#C8C8C8] flex items-center justify-center shadow-lg"
-            style={{
-              borderRadius: "60px",
-              clipPath: "polygon(0% 0%, 98% 0%, 90% 100%, 0% 100%)",
-            }}
-          >
-            <img
-              src="./images/Left-Signup.png"
-              alt="Recycling Graphic"
-              className="w-[80%] h-auto object-contain"
+    <div className="relative min-h-screen w-full bg-[#EDF4ED] font-sans overflow-hidden">
+      {/* Signup Layout */}
+      <div className="flex flex-col md:flex-row min-h-screen relative z-10">
+        {/* Left Panel */}
+        <div className="w-full md:w-1/2 flex items-center justify-center p-6">
+          <div className="w-full flex items-start justify-center">
+            <object
+              type="image/svg+xml"
+              data="/illustrations/machine.svg"
+              className="w-full max-w-[90%] sm:max-w-[600px] md:max-w-[700px] h-auto"
+              aria-label="Signup Illustration"
             />
           </div>
         </div>
 
-        <div className="md:w-1/2 w-full flex items-center justify-center px-6 py-10">
+        {/* Right Panel */}
+        <div className="w-full md:w-1/2 flex items-center justify-center p-4 sm:p-6 md:p-10">
           <div className="w-full max-w-md">
             <div className="flex flex-col items-center mb-6">
-             <img
-              src="./SortUsLogo-removebg-preview.png"
-              alt="SortUs Logo"
-              className="h-16 w-16 object-contain"
-            />
-              <h1 className="text-[32px] font-bold text-black">Hi Recycler</h1>
-              <p className="text-lg text-gray-600 font-medium">
+              <div className="w-28 h-28 flex items-center justify-center mb-4 -ml-8">
+                <object
+                  type="image/svg+xml"
+                  data="/illustrations/SortusLogo.svg"
+                  className="w-50 h-50"
+                  aria-label="SortUs Logo"
+                />
+              </div>
+
+              <h1 className="text-[28px] sm:text-[32px] font-bold text-black">
+                Hi Recycler
+              </h1>
+              <p className="text-base sm:text-lg text-gray-600 font-medium">
                 Welcome to SortUs
               </p>
             </div>
@@ -200,7 +200,6 @@ const Signup = () => {
                     onChange={handleChange}
                     className="w-full mb-4 p-2 border rounded"
                   />
-
                   <input
                     type="text"
                     name="contactNo"
@@ -232,8 +231,8 @@ const Signup = () => {
                     />
                     <label htmlFor="terms">
                       I agree with the{" "}
-                      <a href="#" className="text-primary font-semibold">
-                        Terms & Condition
+                      <a href="#" className="text-green-600 font-semibold">
+                        Terms & Conditions
                       </a>
                     </label>
                   </div>
@@ -241,7 +240,7 @@ const Signup = () => {
                   <button
                     type="button"
                     onClick={handleContinue}
-                    className="w-full bg-primary text-white py-2 px-4 rounded bg-green-600 hover:bg-green-700"
+                    className="w-full bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
                   >
                     Continue
                   </button>
@@ -249,6 +248,7 @@ const Signup = () => {
                   <div className="text-center my-4 text-gray-500 text-sm">
                     or
                   </div>
+
                   <button
                     type="button"
                     className="w-full border flex items-center justify-center py-2 px-4 rounded hover:bg-gray-50"
@@ -265,7 +265,7 @@ const Signup = () => {
 
                   <p className="text-sm text-center mt-4 text-gray-600">
                     Already have an account?{" "}
-                    <a href="/login" className="text-primary font-medium">
+                    <a href="/login" className="text-green-600 font-medium">
                       Login
                     </a>
                   </p>
@@ -288,10 +288,25 @@ const Signup = () => {
                   role={formData.role}
                 />
               )}
+
+              {errors.general && (
+                <p className="text-red-600 mt-4 text-center text-sm">
+                  {errors.general}
+                </p>
+              )}
             </div>
           </div>
         </div>
       </div>
+
+      {/* Tree Background at Bottom */}
+      <div
+        className="absolute bottom-0 left-0 w-full h-[100px] bg-repeat-x bg-bottom z-0"
+        style={{
+          backgroundImage: "url('/illustrations/trees.svg')",
+          backgroundSize: "auto 100%",
+        }}
+      ></div>
     </div>
   );
 };

@@ -24,7 +24,7 @@ const RescheduleOrderPage: React.FC = () => {
 
   return (
     <div className="relative min-h-screen font-sans overflow-hidden bg-[#EDF4ED]">
-      {/* Tree border at the bottom */}
+      {/* Tree Border */}
       <div
         className="absolute bottom-0 left-0 w-full h-[95px] z-0 bg-repeat-x"
         style={{
@@ -34,35 +34,31 @@ const RescheduleOrderPage: React.FC = () => {
         }}
       />
 
-      <div className="flex min-h-screen relative z-10">
-        {/* LEFT PANEL */}
-        <div className="w-1/2 flex items-center justify-center relative p-6">
-          <div
-            className="w-[692px] h-[979px] bg-[#C8C8C8] flex items-center justify-center shadow-lg relative"
-            style={{
-              borderRadius: "60px",
-              clipPath: "polygon(0% 0%, 98% 0%, 90% 100%, 0% 100%)",
-            }}
-          >
+      <div className="flex flex-col md:flex-row min-h-screen relative z-10">
+        {/* LEFT PANEL with SVG */}
+        <div className="w-full md:w-1/2 flex items-center justify-center px-4 pt-4 pb-6 md:p-4 relative">
+          <div className="relative w-full flex items-center justify-center">
+            {/* Back Button inside SVG block */}
             <button
-              className="absolute top-6 right-10 text-green-700 bg-white px-4 py-2 rounded-full shadow flex items-center gap-2 text-sm font-semibold"
               onClick={() => navigate("/eco-store")}
+              className="absolute top-6 right-10 text-sm px-4 py-2 bg-white rounded-full border shadow hover:bg-gray-100 z-10"
             >
-              <span className="text-xl">←</span>
-              <span>Back to Dashboard</span>
+              ← Back to Dashboard
             </button>
 
-            <img
-              src="./images/Left-Signup.png"
-              alt="Recycling Graphic"
-              className="w-[80%] h-auto object-contain"
+            <object
+              type="image/svg+xml"
+              data="/illustrations/machine2.svg"
+              className="w-full max-w-[90%] sm:max-w-[600px] md:max-w-[700px] h-auto"
+              aria-label="Reschedule Illustration"
             />
           </div>
         </div>
 
         {/* RIGHT PANEL */}
-        <div className="w-1/2 flex items-center justify-center px-6 py-10">
+        <div className="w-full md:w-1/2 flex items-center justify-center px-6 py-10">
           <div className="w-full max-w-lg">
+            {/* Logo and Title */}
             <div className="flex flex-col items-center mb-6">
               <img src="./images/SortUsLogo.png" alt="SortUs Logo" className="h-24 mb-4" />
               <h1 className="text-2xl font-bold text-black">Reschedule Order</h1>
@@ -71,9 +67,9 @@ const RescheduleOrderPage: React.FC = () => {
             {/* Green Box */}
             <div className="bg-[#CAE4CA] rounded-2xl p-8 shadow-md border w-full">
               {/* Order Info + Alert */}
-              <div className="flex gap-6 mb-6">
-                {/* Order Information */}
-                <div className="w-2/3">
+              <div className="flex flex-col lg:flex-row gap-6 mb-6">
+                {/* Order Info */}
+                <div className="flex-1">
                   <h2 className="font-bold mb-2">Order ID: #XXXXXX</h2>
                   <div className="space-y-1 text-sm">
                     <p><span className="font-medium">Original Date:</span> January 5, 2025, 4:00 P.M.</p>
@@ -85,10 +81,10 @@ const RescheduleOrderPage: React.FC = () => {
 
                 {/* Alert Box */}
                 <div
-                  className="w-1/3 bg-[#1B4D3E] text-white rounded-[30px] p-4 flex items-start gap-3"
+                  className="bg-[#1B4D3E] text-white rounded-[30px] p-4 flex items-start gap-3"
                   style={{ minWidth: "239px", minHeight: "182px" }}
                 >
-                  <span className="text-yellow-400 mr-2 text-2xl mt-1">⚠</span>
+                  <span className="text-yellow-400 text-2xl mt-1">⚠</span>
                   <div className="text-sm mt-1">
                     <p>Please make sure someone is available at the time slot.</p>
                     <p className="mt-2">Changes can only be made once.</p>
@@ -96,7 +92,7 @@ const RescheduleOrderPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Date and Time Slot Selection */}
+              {/* Date & Time Slot Selection */}
               <div className="mb-6">
                 <h2 className="font-bold mb-2">Select New Time Slot</h2>
 
@@ -127,8 +123,8 @@ const RescheduleOrderPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Action Buttons Row */}
-              <div className="flex flex-row gap-6 mt-6">
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 mt-6">
                 <button
                   className="flex-1 bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition font-medium"
                   onClick={handleReschedule}

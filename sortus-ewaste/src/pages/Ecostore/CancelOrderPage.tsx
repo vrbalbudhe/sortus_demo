@@ -18,46 +18,42 @@ const CancelOrderPage: React.FC = () => {
 
   return (
     <div className="relative min-h-screen font-sans overflow-hidden bg-[#EDF4ED]">
-      {/* Tree border at the bottom */}
+      {/* Bottom Tree Border */}
       <div
         className="absolute bottom-0 left-0 w-full h-[95px] z-0 bg-repeat-x"
         style={{
-          backgroundImage: "url('./images/tree.png')",
+          backgroundImage: "url('/illustrations/trees.svg')",
           backgroundPosition: "bottom",
           backgroundSize: "auto 100%",
         }}
       />
 
-      <div className="flex min-h-screen relative z-10">
+      <div className="flex flex-col md:flex-row min-h-screen relative z-10">
         {/* LEFT PANEL */}
-        <div className="w-1/2 flex items-center justify-center relative p-6">
-          <div
-            className="w-[692px] h-[979px] bg-[#C8C8C8] flex items-center justify-center shadow-lg relative"
-            style={{
-              borderRadius: "60px",
-              clipPath: "polygon(0% 0%, 98% 0%, 90% 100%, 0% 100%)",
-            }}
-          >
+        <div className="w-full md:w-1/2 flex items-center justify-center px-4 pt-4 pb-6 md:p-4 relative">
+          <div className="relative w-full flex items-center justify-center">
+            {/* Back Button inside SVG block */}
             <button
-              className="absolute top-6 right-10 text-green-700 flex items-center gap-2 text-lg bg-white px-4 py-2 rounded-xl"
               onClick={() => navigate("/eco-store")}
+              className="absolute top-6 right-10 text-sm px-4 py-2 bg-white rounded-full border shadow hover:bg-gray-100 z-10"
             >
-              <span className="text-2xl">←</span>
-              <span>Back to Dashboard</span>
+              ← Back to Dashboard
             </button>
-            <img
-              src="./images/Left-Signup.png"
-              alt="Recycling Graphic"
-              className="w-[80%] h-auto object-contain"
+
+            <object
+              type="image/svg+xml"
+              data="/illustrations/machine2.svg"
+              className="w-full max-w-[90%] sm:max-w-[600px] md:max-w-[700px] h-auto"
+              aria-label="Cancel Order Illustration"
             />
           </div>
         </div>
 
         {/* RIGHT PANEL */}
-        <div className="w-1/2 flex items-center justify-center px-6 py-10">
+        <div className="w-full md:w-1/2 flex items-center justify-center px-6 py-10">
           <div className="w-full max-w-lg">
             <div className="flex flex-col items-center mb-6">
-              <img src="./images/SortUsLogo.png" alt="SortUs Logo" className="h-24 mb-4" />
+              <img src="/images/SortUsLogo.png" alt="SortUs Logo" className="h-24 mb-4" />
               <h1 className="text-2xl font-bold text-black">Cancel Order</h1>
             </div>
 
@@ -91,6 +87,7 @@ const CancelOrderPage: React.FC = () => {
                     />
                     <span>Changed my mind</span>
                   </label>
+
                   <label className="flex items-center gap-3">
                     <input
                       type="radio"

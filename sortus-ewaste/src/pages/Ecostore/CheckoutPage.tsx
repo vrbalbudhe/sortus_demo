@@ -1,39 +1,29 @@
 import React, { useState } from "react";
-// import { FaHeart } from 'react-icons/fa';
-// import { IoChevronDown, IoChevronUp } from 'react-icons/io5';
-import { useNavigate } from "react-router-dom";
+import { createPortal } from "react-dom";
+import PickupConfirmed from "../Ecostore/PickupConfirm";
+ 
 
 const CheckoutPage: React.FC = () => {
   const [liked, setLiked] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [showDetails, setShowDetails] = useState(false);
   const [location, setLocation] = useState("");
-
-  const navigate = useNavigate();
+  const [showPopup, setShowPopup] = useState(false); // control modal
 
   return (
     <div className="min-h-screen w-full bg-[#EDF4ED] px-4 py-8">
-      {/* Main Container */}
       <div className="max-w-6xl mx-auto space-y-10">
-        {/* Product + Checkout Section */}
         <div className="bg-white p-6 rounded-2xl shadow-lg grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Left Panel - Image */}
+          {/* Image */}
           <div className="relative">
             <img
               src="./images/officeset.jpg"
               alt="Eco Product"
               className="rounded-xl w-full h-[400px] object-cover"
             />
-            {/* <FaHeart
-                            onClick={() => setLiked(!liked)}
-                            className={`absolute top-4 left-4 text-3xl p-2 rounded-full border-2 transition ${liked
-                                ? 'text-pink-500 border-pink-500 bg-white'
-                                : 'text-gray-400 border-white bg-white'
-                                } cursor-pointer`}
-                        /> */}
           </div>
 
-          {/* Right Panel - Details */}
+          {/* Product Details */}
           <div>
             <h2 className="text-2xl font-bold mb-2">Eco-Friendly Office Set</h2>
             <div className="flex items-center gap-2 mb-2">
@@ -41,9 +31,7 @@ const CheckoutPage: React.FC = () => {
                 Points
               </span>
             </div>
-            <span className="text-3xl font-bold text-black leading-none">
-              150
-            </span>
+            <span className="text-3xl font-bold text-black leading-none">150</span>
             <p className="text-sm text-gray-600 mb-4">Office Supplies</p>
 
             {/* Quantity */}
@@ -66,14 +54,13 @@ const CheckoutPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Details */}
+            {/* Details Dropdown */}
             <div className="mb-4">
               <div
                 className="flex justify-between items-center border px-3 py-2 rounded cursor-pointer"
                 onClick={() => setShowDetails(!showDetails)}
               >
                 <span className="font-medium text-sm">Details</span>
-                {/* {showDetails ? <IoChevronUp /> : <IoChevronDown />} */}
               </div>
               {showDetails && (
                 <div className="mt-2 text-xs text-gray-600 px-1">
@@ -97,16 +84,33 @@ const CheckoutPage: React.FC = () => {
               </select>
             </div>
 
-            {/* Confirm Checkout Button */}
+            {/* Checkout Button */}
             <button
               className="w-full bg-green-600 text-white py-3 rounded hover:bg-green-700 transition font-semibold"
-              onClick={() => navigate("/cancel-order")}
+              onClick={() => setShowPopup(true)}
             >
               CHECK OUT
             </button>
           </div>
         </div>
       </div>
+
+      {/* Pickup Confirmed Popup Modal */}
+      {showPopup &&
+        createPortal(
+          <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex justify-center items-center">
+            <div className="bg-white w-[90%] max-w-2xl rounded-2xl shadow-xl p-6 relative">
+              <button
+                onClick={() => setShowPopup(false)}
+                className="absolute top-3 right-4 text-2xl font-bold text-gray-600 hover:text-black"
+              >
+                ×
+              </button>
+              <PickupConfirmed />
+            </div>
+          </div>,
+          document.body
+        )}
     </div>
   );
 };

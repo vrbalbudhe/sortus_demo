@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
 import RoleNavbar from "../RoleNavbar";
-// import { MdFlashOn } from "react-icons/md";
-// import { IoMdArrowForward } from "react-icons/io";
-// import { FaGift } from "react-icons/fa";
-// import { FiUpload } from "react-icons/fi";
-// import { BsFillFileEarmarkCheckFill } from "react-icons/bs";
-// import { TbReportAnalytics } from "react-icons/tb";
 
 const Business_Dashboard: React.FC = () => {
   const [points, setPoints] = useState({

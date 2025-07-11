@@ -17,44 +17,40 @@ export default function ReschedulePickupPage() {
   };
 
   return (
-    <div className="relative min-h-screen font-sans overflow-hidden">
-      {/* Tree border */}
+    <div className="relative min-h-screen font-sans bg-[#EDF4ED] overflow-hidden">
+      {/* Repeating Tree Background */}
       <div
-        className="absolute bottom-0 left-0 w-full h-[95px] z-0 bg-repeat-x"
+        className="absolute bottom-0 left-0 w-full h-[95px] bg-repeat-x bg-bottom z-0"
         style={{
-          backgroundImage: "url('/images/tree.png')",
-          backgroundPosition: 'bottom',
-          backgroundSize: 'auto 100%',
+          backgroundImage: "url('/illustrations/trees.svg')",
+          backgroundSize: "auto 100%",
         }}
       />
 
-      <div className="flex min-h-screen relative z-10">
-        {/* LEFT PANEL */}
-        <div className="w-1/2 flex flex-col items-center justify-center">
-          <div
-            className="w-[692px] h-[920px] bg-[#C8C8C8] flex flex-col items-center justify-center shadow-lg p-6 relative"
-            style={{
-              borderRadius: '60px',
-              clipPath: 'polygon(0% 0%, 98% 0%, 90% 100%, 0% 100%)',
-            }}
-          >
+      {/* Page Content */}
+      <div className="flex flex-col md:flex-row min-h-screen relative z-10">
+        {/* LEFT PANEL (SVG) */}
+        <div className="w-full md:w-1/2 flex items-center justify-center px-4 pt-4 pb-6 md:p-4 relative">
+          <div className="relative w-full flex items-center justify-center">
+            {/* Back to Dashboard Button inside SVG block */}
             <button
               onClick={() => navigate('/pickup')}
-              className="absolute top-6 right-6 text-sm px-4 py-2 bg-white rounded-full border shadow hover:bg-gray-100"
+              className="absolute top-6 right-10 text-sm px-4 py-2 bg-white rounded-full border shadow hover:bg-gray-100 z-10"
             >
               ← Back to Dashboard
             </button>
 
-            <img
-              src="/images/Left-Signup.png"
-              alt="Recycling Graphic"
-              className="w-[80%] h-auto object-contain"
+            <object
+              type="image/svg+xml"
+              data="/illustrations/machine2.svg"
+              className="w-full max-w-[90%] sm:max-w-[600px] md:max-w-[700px] h-auto"
+              aria-label="Reschedule Illustration"
             />
           </div>
         </div>
 
         {/* RIGHT PANEL */}
-        <div className="w-1/2 flex flex-col items-center justify-center px-6 py-10 relative">
+        <div className="w-full md:w-1/2 flex flex-col items-center justify-center px-6 py-10 relative">
           <div className="text-center mb-6">
             <img src="/images/SortUsLogo.png" alt="SortUs Logo" className="h-16 mx-auto mb-2" />
             <h2 className="text-2xl font-bold text-[#1F2937]">Reschedule Pickup</h2>
@@ -75,9 +71,6 @@ export default function ReschedulePickupPage() {
 
                   <form onSubmit={handleReschedule} className="mt-6">
                     <label className="block text-sm font-semibold mb-2">
-                      Select new Time Slot
-                    </label>
-                    <label htmlFor="pickup-date" className="block text-sm font-semibold mb-2">
                       Select new Date
                     </label>
                     <input
@@ -89,6 +82,9 @@ export default function ReschedulePickupPage() {
                       className="w-full mb-4 p-2 border rounded-md text-sm focus:outline-none"
                     />
 
+                    <label className="block text-sm font-semibold mb-2">
+                      Select new Time Slot
+                    </label>
                     <div className="space-y-3 text-sm text-gray-700 mb-6">
                       {[
                         '10:00 A.M. - 12:00 P.M.',
@@ -110,7 +106,7 @@ export default function ReschedulePickupPage() {
                       ))}
                     </div>
 
-                    <div className="flex justify-end items-center gap-12 mt-10 pr-2">
+                    <div className="flex justify-end items-center gap-4 mt-10">
                       <button
                         type="submit"
                         className="bg-[#2E7D32] text-white px-6 py-2 rounded hover:bg-green-700 transition text-sm font-semibold"
@@ -131,7 +127,7 @@ export default function ReschedulePickupPage() {
 
               {/* RIGHT WARNING BOX */}
               <div className="w-[240px] h-[200px] bg-[#1D4531] text-white text-sm p-4 rounded-lg shadow-md flex flex-col items-center text-center justify-start">
-                <span className="text-yellow-400 text-2xl mb-2">⚠️</span>
+                <span className="text-yellow-400 text-2xl mb-2">⚠</span>
                 <div>
                   <p>Please make sure someone is available at the time slot.</p>
                   <p className="text-gray-300 mt-2 font-bold">
@@ -139,7 +135,6 @@ export default function ReschedulePickupPage() {
                   </p>
                 </div>
               </div>
-
             </div>
           </div>
         </div>

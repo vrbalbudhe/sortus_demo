@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { createPortal } from "react-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Dayjs } from "dayjs";
+import PickupConfirmed from "../Pickup/PickupConfirm"; 
 
 const PickupRequestForm: React.FC = () => {
-  const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     fullName: "",
     location: "",
@@ -20,6 +19,7 @@ const PickupRequestForm: React.FC = () => {
   });
 
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -42,8 +42,7 @@ const PickupRequestForm: React.FC = () => {
       date: selectedDate?.format("YYYY-MM-DD HH:mm") || "",
     };
     console.log(data);
-    alert("Form submitted!");
-    navigate("/pickup/cancel");
+    setShowPopup(true);
   };
 
   const quantity = parseInt(formData.quantity) || 0;
@@ -53,42 +52,37 @@ const PickupRequestForm: React.FC = () => {
   const cashValue = 25 + quantityBonus + frequencyBonus;
 
   return (
-    <div className="relative min-h-screen w-full bg-[#e6f4ea] font-sans pb-20 pl-6">
-      {/* Decorative Images */}
-      {/* <img
-        src="/images/globe-illusion1-removebg-preview.png"
-        alt="recycle-graphic"
-        className="absolute top-28 right-10 w-[420px] md:w-[500px] lg:w-[600px] z-10"
-      />
+    <div className="relative min-h-screen w-full bg-[#e6f4ea] font-sans pb-20 overflow-x-hidden">
+      {/* Background Decorations */}
       <img
         src="/images/finaltrees1.png"
         alt="Tree Set 2"
-        className="absolute opacity-20"
+        className="absolute opacity-20 hidden md:block"
         style={{ left: "7%", bottom: "0%", width: "550px" }}
       />
       <img
         src="/images/tree.png"
         alt="Tree Set 3"
-        className="absolute opacity-20"
+        className="absolute opacity-20 hidden md:block"
         style={{ left: "-10%", bottom: "0%", width: "250px" }}
       />
       <img
         src="/images/finalwindmill.png"
         alt="Windmill"
-        className="absolute opacity-30"
+        className="absolute opacity-30 hidden md:block"
         style={{
           left: "2%",
           top: "20%",
           width: "120px",
           transform: "rotate(10deg)",
         }}
-      /> */}
+      />
 
-      <div className="relative z-10 flex flex-col lg:flex-row px-8 pt-20 items-start md:justify-between md:items-start h-full">
-        {/* Form */}
+      <div className="relative z-10 flex flex-col lg:flex-row gap-12 px-4 md:px-8 lg:px-12 pt-16">
+        {/* Form Panel */}
         <form
           onSubmit={handleSubmit}
-          className="p-8 bg-white border border-gray-300 rounded-lg shadow-md w-full max-w-[800px]"
+          className="bg-white border border-gray-300 rounded-lg shadow-md w-full max-w-[800px] mx-auto p-6 md:p-8"
         >
           <h2 className="text-xl font-semibold text-gray-800">
             Pickup Request
@@ -97,15 +91,11 @@ const PickupRequestForm: React.FC = () => {
             Fill in your details for scheduling the pickup
           </p>
 
-          {/* Text Inputs */}
+          {/* Text fields */}
           {[
             { name: "fullName", label: "Full Name", type: "text" },
             { name: "quantity", label: "Quantity", type: "text" },
-            {
-              name: "description",
-              label: "Description - Optional",
-              type: "text",
-            },
+            { name: "description", label: "Description - Optional", type: "text" },
           ].map(({ name, label, type }) => (
             <div className="mb-4" key={name}>
               <label htmlFor={name} className="block text-sm font-medium">
@@ -123,23 +113,11 @@ const PickupRequestForm: React.FC = () => {
             </div>
           ))}
 
-          {/* Dropdowns */}
+          {/* Dropdown fields */}
           {[
-            {
-              name: "location",
-              label: "Location",
-              options: ["Mumbai", "Pune"],
-            },
-            {
-              name: "itemType",
-              label: "Item Type",
-              options: ["Plastic", "E-Waste"],
-            },
-            {
-              name: "weight",
-              label: "Weight",
-              options: ["1 kg", "5 kg", "10 kg"],
-            },
+            { name: "location", label: "Location", options: ["Mumbai", "Pune"] },
+            { name: "itemType", label: "Item Type", options: ["Plastic", "E-Waste"] },
+            { name: "weight", label: "Weight", options: ["1 kg", "5 kg", "10 kg"] },
           ].map(({ name, label, options }) => (
             <div className="mb-4" key={name}>
               <label htmlFor={name} className="block text-sm font-medium">
@@ -163,17 +141,14 @@ const PickupRequestForm: React.FC = () => {
             </div>
           ))}
 
-          {/* Condition Radios */}
+          {/* Radio buttons */}
           <fieldset className="mb-4">
             <legend className="text-sm font-medium mb-2">Condition</legend>
             {[
               { value: "working", label: "Device is fully functional" },
-              {
-                value: "dead",
-                label: "The waste is not working and cannot be repaired",
-              },
+              { value: "dead", label: "The waste is not working and cannot be repaired" },
             ].map((opt) => (
-              <label className="flex gap-2 mb-1" key={opt.value}>
+              <label className="flex gap-2 mb-2" key={opt.value}>
                 <input
                   type="radio"
                   name="condition"
@@ -190,11 +165,9 @@ const PickupRequestForm: React.FC = () => {
             ))}
           </fieldset>
 
-          {/* Image Upload */}
+          {/* Image upload */}
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-1">
-              Image Upload
-            </label>
+            <label className="block text-sm font-medium mb-1">Image Upload</label>
             <label className="flex justify-center items-center h-28 bg-gray-100 border-2 border-dashed rounded cursor-pointer">
               <img
                 src="https://cdn-icons-png.freepik.com/256/15484/15484654.png?semt=ais_hybrid"
@@ -203,16 +176,12 @@ const PickupRequestForm: React.FC = () => {
               />
               <input type="file" name="imageUpload" className="hidden" />
             </label>
-            <p className="text-center text-xs text-gray-400 mt-1">
-              or drag and drop
-            </p>
+            <p className="text-center text-xs text-gray-400 mt-1">or drag and drop</p>
           </div>
 
-          {/* DateTime Picker */}
+          {/* Date Picker */}
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-1">
-              Select Time
-            </label>
+            <label className="block text-sm font-medium mb-1">Select Time</label>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DateTimePicker
                 value={selectedDate}
@@ -225,7 +194,7 @@ const PickupRequestForm: React.FC = () => {
             </LocalizationProvider>
           </div>
 
-          {/* Terms */}
+          {/* Checkbox */}
           <label className="flex items-start gap-2 text-sm font-medium mb-4">
             <input
               type="checkbox"
@@ -259,10 +228,24 @@ const PickupRequestForm: React.FC = () => {
           </button>
         </form>
 
-        {/* Points & Cash Calculators */}
-        <div className="flex flex-col gap-5 w-full max-w-[400px]">
-          {/* Points */}
-          <div className="bg-white rounded-xl shadow-lg px-6 py-4">
+        {/* RIGHT PANEL */}
+        <div className="flex flex-col items-center gap-8 w-full max-w-[400px] mx-auto">
+          {/* IMAGE + NOTE */}
+          <div className="relative w-60 h-auto mb-4">
+            <img
+              src="/images/note.png"
+              alt="Note"
+              className="absolute -top-10 left-1/2 -translate-x-1/2 w-52"
+            />
+            <img
+              src="/images/pickupgirl.png"
+              alt="Girl Holding Earth"
+              className="w-full h-auto object-contain relative z-10"
+            />
+          </div>
+
+          {/* Points Calculator */}
+          <div className="bg-white rounded-xl shadow-lg px-6 py-4 w-full">
             <h2 className="text-2xl font-bold text-center mb-2">
               Points Calculator
             </h2>
@@ -300,8 +283,8 @@ const PickupRequestForm: React.FC = () => {
             </div>
           </div>
 
-          {/* Cash */}
-          <div className="bg-white rounded-xl shadow-lg px-6 py-4">
+          {/* Cash Calculator */}
+          <div className="bg-white rounded-xl shadow-lg px-6 py-4 w-full">
             <h2 className="text-2xl font-bold text-center mb-2">
               Cash Calculator
             </h2>
@@ -340,6 +323,23 @@ const PickupRequestForm: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* MODAL POPUP */}
+      {showPopup &&
+        createPortal(
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
+            <div className="bg-white w-[90%] max-w-xl rounded-2xl shadow-xl p-6 relative">
+              <button
+                onClick={() => setShowPopup(false)}
+                className="absolute top-3 right-4 text-2xl font-bold text-gray-600 hover:text-black"
+              >
+                ×
+              </button>
+              <PickupConfirmed />
+            </div>
+          </div>,
+          document.body
+        )}
     </div>
   );
 };

@@ -1,9 +1,5 @@
 import React from 'react';
 import RoleNavbar from '../RoleNavbar';
-// import { MdFlashOn } from 'react-icons/md';
-// import { FaTruck, FaGift } from 'react-icons/fa';
-// import { IoMdArrowForward } from 'react-icons/io';
-
 const Individual_Dashboard: React.FC = () => {
   const progressPercent = 70;
   const circumference = 339.29;

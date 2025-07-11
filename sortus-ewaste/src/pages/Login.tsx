@@ -20,18 +20,13 @@ interface AuthContextType {
 
 const LeftPanel = () => {
   return (
-    <div className="hidden w-1/2 md:flex items-start justify-center p-6 bg-transparent">
-      <div
-        className="w-[692px] h-screen bg-gradient-to-br from-emerald-400 via-teal-500 to-emerald-600 flex items-center justify-center shadow-2xl duration-700"
-        style={{
-          borderRadius: "60px",
-          clipPath: "polygon(0% 0%, 98% 0%, 90% 100%, 0% 100%)",
-        }}
-      >
-        <img
-          src="./images/Left-Login.png"
-          alt="Recycling"
-          className="w-[80%] h-auto drop-shadow-lg"
+    <div className="hidden md:flex md:w-1/2 items-center justify-center">
+      <div className="w-full h-full flex items-start justify-start px-6 pt-10 pb-10">
+        <object
+          type="image/svg+xml"
+          data="/illustrations/machine.svg"
+          className="w-full max-w-[750px] h-auto"
+          aria-label="Machine Illustration"
         />
       </div>
     </div>
@@ -42,8 +37,9 @@ const RightPanel = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ general?: string }>({});
-  const { user, setUser, loading, setLoading, refreshLoginContext } =
-    useContext(AuthContext) as AuthContextType;
+  const { setUser, setLoading, refreshLoginContext } = useContext(
+    AuthContext
+  ) as AuthContextType;
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -57,16 +53,16 @@ const RightPanel = () => {
         { withCredentials: true }
       );
       if (response?.data?.data?.user) {
-        navigate("/");
         await refreshLoginContext();
-        setUser(response?.data?.data?.user);
-      }
-      if (!response?.data?.data?.user) {
+        setUser(response.data.data.user);
+        navigate("/");
+      } else {
         setErrors({
           general: response?.data?.data?.message || "Login failed",
         });
       }
     } catch (error) {
+      setErrors({ general: "An unexpected error occurred." });
     } finally {
       setLoading(false);
     }
@@ -76,29 +72,32 @@ const RightPanel = () => {
     <div className="w-full md:w-1/2 flex items-center justify-center px-6 py-10">
       <div className="w-full max-w-md">
         <div className="flex flex-col items-center mb-8">
-          <div className="w-24 h-24 bg-transparent flex items-center justify-center mb-4">
-            <img
-              src="./SortUsLogo-removebg-preview.png"
-              alt="SortUs Logo"
-              className="h-16 w-16 object-contain"
+          <div className="w-28 h-28 flex items-center justify-center mb-4 -ml-8">
+            <object
+              type="image/svg+xml"
+              data="/illustrations/SortusLogo.svg"
+              className="w-28 h-28"
+              aria-label="SortUs Logo"
             />
           </div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent mb-2">
-            Welcome Back
+
+          <h1 className="text-[28px] sm:text-[32px] font-bold text-black">
+            Hi Recycler
           </h1>
-          <p className="text-lg text-gray-600 font-medium">
-            Login to your SortUs account
+          <p className="text-base sm:text-lg text-gray-600 font-medium">
+            Welcome to SortUs
           </p>
         </div>
 
-        <form onSubmit={handleLogin} className="p-8 ">
+        <form onSubmit={handleLogin} className="p-0">
           <div className="space-y-5">
             <div className="relative">
               <input
                 type="email"
-                placeholder="email"
+                placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
                 className="w-full p-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all duration-300 font-medium placeholder-gray-400"
               />
               <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
@@ -124,6 +123,7 @@ const RightPanel = () => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
                 className="w-full p-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all duration-300 font-medium placeholder-gray-400"
               />
               <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
@@ -143,9 +143,13 @@ const RightPanel = () => {
               </div>
             </div>
 
+            {errors.general && (
+              <p className="text-red-500 text-sm">{errors.general}</p>
+            )}
+
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white py-4 px-6 rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold text-lg"
+              className="w-full bg-green-600 text-white py-3 px-4 rounded hover:bg-green-700 transition-all duration-300 font-semibold text-lg"
             >
               Login
             </button>
@@ -177,7 +181,7 @@ const RightPanel = () => {
             Don't have an account?{" "}
             <Link
               to="/signup"
-              className="text-emerald-600 font-semibold hover:text-emerald-700 hover:underline transition-colors duration-300"
+              className="text-green-600 font-semibold hover:underline transition-colors duration-300"
             >
               Sign up
             </Link>
@@ -192,14 +196,14 @@ export default function Login() {
   return (
     <div className="w-full relative overflow-hidden min-h-screen bg-[#EDF4ED]">
       <div
-        className="absolute bottom-0 left-0 w-full min-h-[100px] opacity-30"
+        className="absolute bottom-0 left-0 w-full h-[100px] bg-repeat-x z-10 pointer-events-none"
         style={{
-          backgroundImage: "url('./images/tree.png')",
-          backgroundPosition: "bottom",
+          backgroundImage: "url('/illustrations/trees.svg')",
           backgroundSize: "auto 100%",
+          backgroundPosition: "bottom left",
         }}
-      />
-      <div className="w-full flex relative min-h-screen">
+      ></div>
+      <div className="flex flex-col md:flex-row w-full relative min-h-screen z-10">
         <LeftPanel />
         <RightPanel />
       </div>
